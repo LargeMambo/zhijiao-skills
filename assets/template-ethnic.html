@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>课件标题</title>
+<style>
+/* ===== CSS 变量 — 主题 A 暖橙（默认）===== */
+:root {
+  --bg-primary: #fffbf5;
+  --bg-slide: #ffffff;
+  --bg-accent: #fff3e0;
+  --color-primary: #e65100;
+  --color-secondary: #f57c00;
+  --color-keyword: #ffffff;
+  --bg-keyword: #e53e3e;
+  --color-text: #1a1a1a;
+  --color-text-light: #555555;
+  --color-border: #ffcc80;
+  --step-num-bg: #ff6d00;
+  --step-num-color: #ffffff;
+  --nav-dot: #e65100;
+
+  /* 字号变量 */
+  --font-title: 3.2rem;
+  --font-subtitle: 2rem;
+  --font-body: 1.8rem;
+  --font-keyword: 2.4rem;
+  --font-small: 1.2rem;
+}
+
+/* ===== 基础重置 ===== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { width: 100%; height: 100%; overflow: hidden; background: var(--bg-primary); }
+body { font-family: system-ui, "Microsoft YaHei", "PingFang SC", "Noto Sans SC", sans-serif; color: var(--color-text); }
+
+/* ===== 幻灯片容器 ===== */
+#deck { width: 100vw; height: 100vh; position: relative; overflow: hidden; }
+
+/* ===== 单张幻灯片 ===== */
+.slide {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  display: flex; flex-direction: column; justify-content: center; align-items: center;
+  padding: 4rem 6rem;
+  background: var(--bg-slide);
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.4s ease;
+}
+.slide.active { opacity: 1; pointer-events: all; }
+
+/* ===== 字号 ===== */
+.slide-title { font-size: var(--font-title); font-weight: 700; color: var(--color-primary); margin-bottom: 2rem; text-align: center; line-height: 1.2; }
+h1 { font-size: var(--font-title); }
+h2 { font-size: var(--font-subtitle); }
+p, li { font-size: var(--font-body); line-height: 1.7; }
+
+/* ===== 关键词高亮 ===== */
+.keyword-highlight {
+  background: var(--bg-keyword); color: var(--color-keyword);
+  padding: 0.15em 0.4em; border-radius: 4px;
+  font-weight: 700; font-size: inherit;
+}
+
+/* ===== L01 封面 ===== */
+.slide-cover { background: #0a0a2e; color: #fff; position: relative; overflow: hidden; }
+.slide-cover canvas { position: absolute; inset: 0; z-index: 0; }
+.cover-content { position: relative; z-index: 1; text-align: center; }
+.subject-tag { font-size: var(--font-small); background: rgba(255,255,255,0.15); padding: 0.4em 1.2em; border-radius: 2em; display: inline-block; margin-bottom: 2rem; color: #ccc; }
+.cover-title { font-size: clamp(2.8rem, 5vw, 5rem); font-weight: 900; color: #fff; line-height: 1.15; margin-bottom: 2rem; }
+.cover-meta { display: flex; gap: 2rem; justify-content: center; color: rgba(255,255,255,0.7); font-size: 1.4rem; }
+.teacher-info { margin-top: 1.5rem; color: rgba(255,255,255,0.5); font-size: 1.2rem; }
+
+/* ===== L02 学习目标 ===== */
+.slide-objectives { align-items: flex-start; }
+.objective-list { list-style: none; display: flex; flex-direction: column; gap: 1.8rem; width: 100%; max-width: 900px; }
+.objective-list li { display: flex; align-items: flex-start; gap: 1.5rem; background: var(--bg-accent); padding: 1.2rem 1.8rem; border-radius: 12px; border-left: 6px solid var(--color-primary); }
+.obj-num { font-size: 2rem; font-weight: 900; color: var(--color-primary); min-width: 2.5rem; }
+.obj-text { font-size: var(--font-body); line-height: 1.5; }
+
+/* ===== L03 新知引入 ===== */
+.slide-intro { display: grid; grid-template-rows: 1fr auto; gap: 2rem; }
+.intro-image-area { display: flex; align-items: center; justify-content: center; }
+.big-emoji { font-size: 8rem; line-height: 1; }
+.intro-question { background: var(--bg-accent); border: 2px solid var(--color-border); border-radius: 16px; padding: 2rem 3rem; text-align: center; }
+.question-label { font-size: 1.4rem; color: var(--color-secondary); font-weight: 600; display: block; margin-bottom: 0.8rem; }
+.question-text { font-size: var(--font-keyword); font-weight: 700; color: var(--color-text); }
+
+/* ===== L04 概念讲解 ===== */
+.concept-layout { display: grid; grid-template-columns: 1fr 1.5fr; gap: 3rem; align-items: center; width: 100%; }
+.concept-visual { display: flex; justify-content: center; align-items: center; font-size: 6rem; background: var(--bg-accent); border-radius: 16px; padding: 2rem; aspect-ratio: 1; }
+.concept-definition { font-size: var(--font-body); margin-bottom: 1.5rem; line-height: 1.7; }
+.concept-points { list-style: none; display: flex; flex-direction: column; gap: 1rem; }
+.concept-points li { font-size: var(--font-body); padding-left: 1.5rem; position: relative; }
+.concept-points li::before { content: "▸"; position: absolute; left: 0; color: var(--color-primary); }
+
+/* ===== L05 步骤分解 ===== */
+.steps-flow { display: flex; align-items: center; justify-content: center; gap: 1.5rem; flex-wrap: wrap; width: 100%; }
+.step-card { background: var(--bg-accent); border: 2px solid var(--color-border); border-radius: 16px; padding: 1.8rem 2rem; text-align: center; min-width: 180px; flex: 1; max-width: 220px; }
+.step-num { font-size: 1.6rem; font-weight: 900; background: var(--step-num-bg); color: var(--step-num-color); width: 3rem; height: 3rem; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; }
+.step-content { font-size: 1.6rem; font-weight: 600; line-height: 1.4; }
+.step-arrow { font-size: 2.5rem; color: var(--color-secondary); flex-shrink: 0; }
+
+/* ===== L06 例题精讲 ===== */
+.slide-example { align-items: flex-start; }
+.example-header { display: flex; align-items: center; gap: 1.5rem; margin-bottom: 1.5rem; }
+.example-badge { background: var(--color-primary); color: #fff; padding: 0.4em 1em; border-radius: 2em; font-size: 1.4rem; font-weight: 700; }
+.example-difficulty { font-size: 1.4rem; color: var(--color-text-light); }
+.example-question { background: var(--bg-accent); border-left: 6px solid var(--color-primary); border-radius: 0 12px 12px 0; padding: 1.5rem 2rem; margin-bottom: 2rem; width: 100%; }
+.example-question p { font-size: var(--font-keyword); font-weight: 600; line-height: 1.5; }
+.example-solution { display: flex; flex-direction: column; gap: 1rem; width: 100%; }
+.solution-step { display: flex; align-items: baseline; gap: 1rem; font-size: var(--font-body); padding: 0.5rem 0; border-bottom: 1px dashed var(--color-border); }
+.step-label { font-weight: 700; color: var(--color-primary); min-width: 3rem; flex-shrink: 0; }
+.solution-answer .step-label { font-size: 1.8rem; }
+.answer-text { font-size: var(--font-keyword); font-weight: 900; color: var(--bg-keyword); }
+
+/* ===== L07 跟练 ===== */
+.slide-practice { align-items: flex-start; }
+.practice-list { display: flex; flex-direction: column; gap: 1.5rem; width: 100%; }
+.practice-item { display: flex; flex-direction: column; gap: 0.8rem; background: var(--bg-accent); border-radius: 12px; padding: 1.2rem 1.8rem; }
+.practice-num { font-size: 1.4rem; font-weight: 700; color: var(--color-secondary); }
+.practice-q { font-size: var(--font-body); font-weight: 600; }
+.diff-tag { margin-left: 0.5rem; }
+.practice-answer { margin-top: 0.5rem; }
+.practice-answer summary { font-size: 1.3rem; color: var(--color-primary); cursor: pointer; user-select: none; padding: 0.3em 0.8em; background: var(--color-border); border-radius: 6px; display: inline-block; }
+.practice-answer .answer-text { font-size: 1.4rem; color: #2d6a2d; font-weight: 600; padding-top: 0.5rem; display: block; }
+
+/* ===== L08 互动问答 ===== */
+.slide-interaction { justify-content: center; }
+.interaction-center { text-align: center; display: flex; flex-direction: column; align-items: center; gap: 2rem; }
+.raise-hand-emoji { font-size: 7rem; display: block; }
+.interaction-prompt { font-size: var(--font-keyword); font-weight: 700; color: var(--color-text); max-width: 800px; }
+.interaction-hint { font-size: 1.5rem; color: var(--color-text-light); background: var(--bg-accent); padding: 0.8em 1.5em; border-radius: 8px; }
+.think-time { margin-top: 2rem; font-size: 1.4rem; color: var(--color-text-light); }
+
+/* ===== L10 知识小结 ===== */
+.mind-map { display: flex; flex-direction: column; align-items: center; gap: 2rem; width: 100%; }
+.mind-center { background: var(--color-primary); color: #fff; font-size: var(--font-subtitle); font-weight: 900; padding: 1em 2.5em; border-radius: 2em; }
+.mind-branches { display: flex; flex-wrap: wrap; gap: 1.5rem; justify-content: center; }
+.mind-branch { background: var(--bg-accent); border: 2px solid var(--color-border); border-radius: 12px; padding: 1em 2em; font-size: var(--font-body); font-weight: 600; position: relative; }
+.mind-branch::before { content: ""; position: absolute; top: -1.5rem; left: 50%; width: 2px; height: 1.5rem; background: var(--color-border); }
+
+/* ===== L11 记忆强化 ===== */
+.slide-memory { background: var(--bg-accent); }
+.memory-center { text-align: center; display: flex; flex-direction: column; align-items: center; gap: 2.5rem; }
+.memory-keyword { font-size: clamp(2.5rem, 6vw, 5rem); font-weight: 900; background: var(--bg-keyword); color: var(--color-keyword); padding: 0.5em 1.5em; border-radius: 16px; line-height: 1.3; }
+.memory-sentence { font-size: 1.8rem; color: var(--color-text); max-width: 700px; text-align: center; line-height: 1.6; }
+
+/* ===== L12 收尾 ===== */
+.slide-ending { background: #0a0a2e; color: #fff; position: relative; overflow: hidden; }
+.slide-ending canvas { position: absolute; inset: 0; z-index: 0; }
+.ending-content { position: relative; z-index: 1; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 1.5rem; }
+.praise-emoji { font-size: 6rem; }
+.ending-title { font-size: var(--font-title); font-weight: 900; color: #fff; }
+.homework-box { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.3); border-radius: 16px; padding: 1.5rem 3rem; margin: 1rem 0; }
+.homework-title { font-size: 1.5rem; font-weight: 700; color: #ffd700; margin-bottom: 0.5rem; }
+.homework-content { font-size: var(--font-body); color: rgba(255,255,255,0.9); }
+.ending-quote { font-size: 1.4rem; color: rgba(255,255,255,0.6); font-style: italic; }
+
+/* ===== 双语注释栏 ===== */
+.bilingual-bar { position: absolute; bottom: 0; left: 0; right: 0; display: flex; align-items: center; justify-content: center; gap: 0.8rem; padding: 0.6rem 2rem; background: rgba(0,0,0,0.06); border-top: 1px solid var(--color-border); font-size: 1.1rem; color: var(--color-text-light); z-index: 10; }
+.bi-minority { font-size: 1.2rem; color: var(--color-primary); font-weight: 600; }
+[lang="ug"],[lang="kk"],[lang="ky"] { font-family: "Noto Nastaliq Urdu", serif; }
+[lang="bo"] { font-family: "Tibetan Machine Uni", "Noto Serif Tibetan", serif; }
+
+/* ===== 底部导航 ===== */
+#nav { position: fixed; bottom: 1.5rem; left: 50%; transform: translateX(-50%); display: flex; gap: 0.6rem; z-index: 100; }
+.nav-dot { width: 10px; height: 10px; border-radius: 50%; background: rgba(0,0,0,0.2); cursor: pointer; transition: background 0.2s, transform 0.2s; border: none; }
+.nav-dot.active { background: var(--nav-dot); transform: scale(1.4); }
+
+/* ===== 幻灯片概览（ESC） ===== */
+#overview { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 200; padding: 2rem; overflow-y: auto; }
+#overview.open { display: flex; flex-wrap: wrap; gap: 1rem; align-content: flex-start; justify-content: center; }
+.ov-thumb { width: 200px; height: 112px; background: #fff; border-radius: 8px; cursor: pointer; border: 3px solid transparent; overflow: hidden; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; color: #333; text-align: center; padding: 0.5rem; transition: border-color 0.15s; }
+.ov-thumb.active { border-color: #fff; }
+.ov-thumb:hover { border-color: rgba(255,255,255,0.6); }
+
+/* ===== 动效 CSS ===== */
+[data-anim] { opacity: 0; }
+.slide.active [data-anim="fade-in"] { animation: fadeIn 0.5s ease forwards; }
+.slide.active [data-anim="flip-in"] { animation: flipIn 0.6s ease forwards; }
+.slide.active [data-anim="slide-in"] { animation: slideIn 0.5s ease forwards; }
+.slide.active [data-anim="bounce"] { animation: bounceIn 0.7s ease forwards; }
+.slide.active [data-anim="bounce-highlight"] { animation: bounceHighlight 0.8s ease forwards; }
+.slide.active [data-anim="zoom-in"] { animation: zoomIn 0.5s ease forwards; }
+
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+@keyframes flipIn { from { opacity: 0; transform: perspective(600px) rotateY(-90deg); } to { opacity: 1; transform: perspective(600px) rotateY(0); } }
+@keyframes slideIn { from { opacity: 0; transform: translateX(-30px); } to { opacity: 1; transform: none; } }
+@keyframes bounceIn { 0% { opacity: 0; transform: scale(0.3); } 60% { opacity: 1; transform: scale(1.1); } 80% { transform: scale(0.9); } 100% { opacity: 1; transform: scale(1); } }
+@keyframes bounceHighlight { 0% { opacity: 0; transform: scale(0.5); background: var(--bg-keyword); } 50% { transform: scale(1.15); } 100% { opacity: 1; transform: scale(1); } }
+@keyframes zoomIn { from { opacity: 0; transform: scale(0.7); } to { opacity: 1; transform: scale(1); } }
+
+/* data-delay 支持 (JS 处理) */
+</style>
+</head>
+<body>
+
+<div id="deck">
+  <!-- SLIDES_HERE -->
+</div>
+
+<nav id="nav">
+  <!-- 导航点由 JS 动态生成 -->
+</nav>
+
+<div id="overview">
+  <!-- 概览缩略图由 JS 动态生成 -->
+</div>
+
+<script>
+/* ===== 核心运行时 ===== */
+(function() {
+  const deck = document.getElementById('deck');
+  const nav = document.getElementById('nav');
+  const overview = document.getElementById('overview');
+  const slides = Array.from(deck.querySelectorAll('.slide'));
+  let current = 0;
+
+  // 初始化导航点
+  slides.forEach((_, i) => {
+    const dot = document.createElement('button');
+    dot.className = 'nav-dot' + (i === 0 ? ' active' : '');
+    dot.setAttribute('aria-label', `第${i+1}页`);
+    dot.addEventListener('click', () => goTo(i));
+    nav.appendChild(dot);
+  });
+
+  // 初始化概览缩略图
+  slides.forEach((s, i) => {
+    const thumb = document.createElement('div');
+    thumb.className = 'ov-thumb' + (i === 0 ? ' active' : '');
+    thumb.textContent = s.querySelector('h1,h2,.slide-title,.cover-title')?.textContent?.trim() || `第${i+1}页`;
+    thumb.addEventListener('click', () => { goTo(i); closeOverview(); });
+    overview.appendChild(thumb);
+  });
+
+  function goTo(n) {
+    slides[current]?.classList.remove('active');
+    nav.querySelectorAll('.nav-dot')[current]?.classList.remove('active');
+    overview.querySelectorAll('.ov-thumb')[current]?.classList.remove('active');
+    current = Math.max(0, Math.min(n, slides.length - 1));
+    slides[current]?.classList.add('active');
+    nav.querySelectorAll('.nav-dot')[current]?.classList.add('active');
+    overview.querySelectorAll('.ov-thumb')[current]?.classList.add('active');
+    // 触发 data-delay 动画
+    slides[current].querySelectorAll('[data-delay]').forEach(el => {
+      el.style.animationDelay = el.dataset.delay + 's';
+    });
+    // 触发 canvas 特效
+    const fx = slides[current].dataset.fx;
+    if (fx === 'particles') startParticles(slides[current]);
+    if (fx === 'confetti') startConfetti(slides[current]);
+  }
+
+  function closeOverview() { overview.classList.remove('open'); }
+
+  // 键盘导航
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') { overview.classList.toggle('open'); return; }
+    if (overview.classList.contains('open')) return;
+    if (e.key === 'ArrowRight' || e.key === ' ') goTo(current + 1);
+    if (e.key === 'ArrowLeft') goTo(current - 1);
+  });
+
+  // 触摸滑动
+  let touchX = 0;
+  deck.addEventListener('touchstart', e => touchX = e.touches[0].clientX, { passive: true });
+  deck.addEventListener('touchend', e => {
+    const diff = touchX - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 50) goTo(current + (diff > 0 ? 1 : -1));
+  }, { passive: true });
+
+  goTo(0);
+
+  /* ===== Canvas 特效：粒子背景 ===== */
+  function startParticles(slide) {
+    let canvas = slide.querySelector('canvas.fx-canvas');
+    if (canvas) return;
+    canvas = document.createElement('canvas');
+    canvas.className = 'fx-canvas';
+    canvas.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;pointer-events:none;';
+    slide.insertBefore(canvas, slide.firstChild);
+    const ctx = canvas.getContext('2d');
+    const W = canvas.width = slide.offsetWidth;
+    const H = canvas.height = slide.offsetHeight;
+    const particles = Array.from({length: 120}, () => ({
+      x: Math.random()*W, y: Math.random()*H,
+      vx: (Math.random()-0.5)*0.5, vy: -Math.random()*0.3-0.1,
+      r: Math.random()*2+0.5, a: Math.random()
+    }));
+    let raf;
+    function draw() {
+      ctx.clearRect(0,0,W,H);
+      particles.forEach(p => {
+        ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI*2);
+        ctx.fillStyle = `rgba(255,255,255,${p.a})`; ctx.fill();
+        p.x += p.vx; p.y += p.vy;
+        if (p.y < 0) { p.y = H; p.x = Math.random()*W; }
+        if (p.x < 0) p.x = W; if (p.x > W) p.x = 0;
+      });
+      raf = requestAnimationFrame(draw);
+    }
+    draw();
+    slide._cancelFx = () => { cancelAnimationFrame(raf); canvas.remove(); };
+  }
+
+  /* ===== Canvas 特效：彩纸 ===== */
+  function startConfetti(slide) {
+    let canvas = slide.querySelector('canvas.fx-canvas');
+    if (canvas) return;
+    canvas = document.createElement('canvas');
+    canvas.className = 'fx-canvas';
+    canvas.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;pointer-events:none;';
+    slide.insertBefore(canvas, slide.firstChild);
+    const ctx = canvas.getContext('2d');
+    const W = canvas.width = slide.offsetWidth;
+    const H = canvas.height = slide.offsetHeight;
+    const colors = ['#ff6b6b','#ffd93d','#6bcb77','#4d96ff','#ff922b','#cc5de8'];
+    const pieces = Array.from({length: 80}, () => ({
+      x: Math.random()*W, y: -20,
+      vx: (Math.random()-0.5)*3, vy: Math.random()*3+2,
+      w: Math.random()*12+6, h: Math.random()*6+4,
+      color: colors[Math.floor(Math.random()*colors.length)],
+      rot: Math.random()*360, rv: (Math.random()-0.5)*8
+    }));
+    let raf;
+    function draw() {
+      ctx.clearRect(0,0,W,H);
+      let alive = false;
+      pieces.forEach(p => {
+        ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.rot*Math.PI/180);
+        ctx.fillStyle = p.color; ctx.fillRect(-p.w/2, -p.h/2, p.w, p.h);
+        ctx.restore();
+        p.x += p.vx; p.y += p.vy; p.rot += p.rv;
+        if (p.y < H + 20) alive = true;
+      });
+      if (alive) raf = requestAnimationFrame(draw);
+    }
+    draw();
+  }
+})();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <!-- board frame -->
+  <rect x="4" y="8" width="56" height="40" rx="4" fill="#2d6a4f" stroke="#1b4332" stroke-width="2.5"/>
+  <!-- board surface -->
+  <rect x="8" y="12" width="48" height="32" rx="2" fill="#40916c"/>
+  <!-- chalk lines (text simulation) -->
+  <line x1="14" y1="22" x2="34" y2="22" stroke="#d8f3dc" stroke-width="2.5" stroke-linecap="round" opacity="0.9"/>
+  <line x1="14" y1="30" x2="50" y2="30" stroke="#d8f3dc" stroke-width="2.5" stroke-linecap="round" opacity="0.9"/>
+  <line x1="14" y1="38" x2="42" y2="38" stroke="#d8f3dc" stroke-width="2.5" stroke-linecap="round" opacity="0.9"/>
+  <!-- chalk dust -->
+  <circle cx="48" cy="22" r="2" fill="#d8f3dc" opacity="0.5"/>
+  <!-- legs -->
+  <line x1="16" y1="48" x2="12" y2="60" stroke="#1b4332" stroke-width="3" stroke-linecap="round"/>
+  <line x1="48" y1="48" x2="52" y2="60" stroke="#1b4332" stroke-width="3" stroke-linecap="round"/>
+  <!-- ledge -->
+  <rect x="6" y="46" width="52" height="4" rx="2" fill="#1b4332"/>
+</svg>
