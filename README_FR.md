@@ -8,13 +8,13 @@
 
 <div align="center">
 
-[中文](README_CN.md) | [English](README.md) | **Français**
+[简体中文](README_CN.md) | [English](README.md) | **Français** | [བོད་སྐད](README_BO.md) | [ئۇيغۇرچە](README_UG.md)
 
 </div>
 
 <div align="center">
 
-![Version](https://img.shields.io/badge/version-1.0.0-orange)
+![Version](https://img.shields.io/badge/version-1.4.1-orange)
 ![Compatible](https://img.shields.io/badge/compatible-Claude%20Code%20%7C%20IA%20universelle-blue)
 ![Licence](https://img.shields.io/badge/licence-MIT-green)
 
@@ -185,17 +185,47 @@ zhijiao-skills/
 
 ## Questions fréquentes
 
-**Q : Ai-je besoin de connaissances en programmation ?**
-R : Non. L'installation consiste à copier un dossier. L'utilisation se fait en langage naturel.
+<details>
+<summary><strong>Q : Ai-je besoin de connaissances en programmation ?</strong></summary>
 
-**Q : Le diaporama généré nécessite-t-il Internet ?**
-R : L'IA nécessite Internet pour générer le fichier, mais le fichier `.html` final est entièrement hors ligne.
+Non. L'installation consiste à copier un dossier. L'utilisation se fait en langage naturel.
 
-**Q : Quels navigateurs fonctionnent ?**
-R : Chrome, Edge, Firefox, Safari — tous fonctionnent.
+</details>
 
-**Q : Les traductions en langues minoritaires sont-elles précises ?**
-R : Généralement précises, mais les dialectes varient. Pour le contenu important, faites vérifier par un locuteur natif.
+<details>
+<summary><strong>Q : Le diaporama généré nécessite-t-il Internet ?</strong></summary>
+
+L'IA nécessite Internet pour générer le fichier, mais le fichier `.html` final est entièrement hors ligne — copiez-le sur une clé USB et utilisez-le n'importe où.
+
+</details>
+
+<details>
+<summary><strong>Q : Quels navigateurs fonctionnent ?</strong></summary>
+
+Chrome, Edge, Firefox, Safari — tous fonctionnent. Sur les anciens ordinateurs scolaires, la dernière version de Chrome ou Edge est recommandée (toutes deux gratuites).
+
+</details>
+
+<details>
+<summary><strong>Q : Les traductions en langues minoritaires sont-elles précises ?</strong></summary>
+
+Généralement précises, mais les dialectes varient. Pour le contenu important, faites vérifier par un locuteur natif.
+
+</details>
+
+<details>
+<summary><strong>Q : Comment utiliser avec ChatGPT ou Codex ?</strong></summary>
+
+Copiez l'intégralité du contenu de `SKILL.md` et collez-le comme System Prompt. Pour de meilleurs résultats, joignez également les fichiers du dossier `references/`.
+
+</details>
+
+<details>
+<summary><strong>Q : Comment mettre à jour le pack de compétences ?</strong></summary>
+
+Si vous avez utilisé Git : exécutez `git pull` dans le dossier `zhijiao-skills`. Si vous avez téléchargé un ZIP : supprimez l'ancien dossier et re-téléchargez.
+
+</details>
 
 ---
 

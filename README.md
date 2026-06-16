@@ -8,13 +8,13 @@
 
 <div align="center">
 
-[中文](README_CN.md) | **English** | [Français](README_FR.md)
+[简体中文](README_CN.md) | **English** | [Français](README_FR.md) | [བོད་སྐད](README_BO.md) | [ئۇيغۇرچە](README_UG.md)
 
 </div>
 
 <div align="center">
 
-![Version](https://img.shields.io/badge/version-1.0.0-orange)
+![Version](https://img.shields.io/badge/version-1.4.1-orange)
 ![Compatible](https://img.shields.io/badge/compatible-Claude%20Code%20%7C%20Universal%20AI-blue)
 ![License](https://img.shields.io/badge/license-MIT-green)
 
@@ -51,7 +51,19 @@ You need **Claude Code** or another AI tool that supports skill packs.
 ```bash
 claude --version
 ```
-If you see a version number, you're ready.
+If you see a version number, you're ready. If not, see the [Claude Code getting started guide](https://docs.anthropic.com/en/docs/claude-code/getting-started).
+
+---
+
+### Recommended AI tools
+
+| Tool | Rating | Notes |
+|---|---|---|
+| **Claude Code** (CLI) | ⭐⭐⭐⭐⭐ Best | Native `/skills` system, trigger with one sentence |
+| **OpenAI Codex / ChatGPT** | ⭐⭐⭐⭐ Good | Paste `SKILL.md` as System Prompt |
+| **Claude.ai web** | ⭐⭐⭐⭐ Good | Upload `SKILL.md` to the conversation |
+| **Cursor / Windsurf** | ⭐⭐⭐ Works | Add `SKILL.md` as `.cursorrules` |
+| **Local AI (Ollama, etc.)** | ⭐⭐⭐ Works | Quality depends on model capability |
 
 ---
 
@@ -66,25 +78,51 @@ If you see a version number, you're ready.
 
 ---
 
-### Option 2 — Git clone
+### Option 2 — npm install (recommended for developers)
+
+> Requires [Node.js](https://nodejs.org/) 18+ (npm is included with Node.js).
+
+```bash
+# Install Claude Code if you haven't already
+npm install -g @anthropic-ai/claude-code
+
+# Navigate to the skills directory
+cd ~/.claude/skills          # Mac/Linux
+# cd %USERPROFILE%\.claude\skills   # Windows
+
+# Clone this skill pack
+git clone https://github.com/LargeMambo/zhijiao-skills.git
+
+# Verify inside Claude Code
+claude
+/skills
+```
+
+> **Compatibility:** Claude Code installs via npm and supports Node.js 18+ on Windows, macOS, and Linux. The skill pack itself is plain text — no `npm install` needed for the skills themselves.
+
+---
+
+### Option 3 — Git clone
 
 ```bash
 cd ~/.claude/skills   # or %USERPROFILE%\.claude\skills on Windows
-git clone https://github.com/your-username/zhijiao-skills.git
+git clone https://github.com/LargeMambo/zhijiao-skills.git
 ```
 
 ---
 
-### Option 3 — Universal AI tools
+### Option 4 — Universal AI tools
 
 This skill pack works with any AI tool:
 
 | Tool | How to use |
 |---|---|
 | **Claude.ai web** | Upload `SKILL.md` or paste its content as system prompt |
-| **ChatGPT / GPT-4** | Paste `SKILL.md` content into System Prompt |
-| **Cursor / Windsurf** | Add `SKILL.md` as a project rule file |
+| **ChatGPT / Codex** | Paste `SKILL.md` content into System Prompt |
+| **Cursor / Windsurf** | Add `SKILL.md` as a project rule file (`.cursorrules`) |
 | **Local AI (Ollama, etc.)** | Use `SKILL.md` content as system prompt |
+
+> For best results with generic AI tools, also attach the files in `references/`.
 
 ---
 
@@ -181,24 +219,65 @@ zhijiao-skills/
 │   ├── minority-languages.md     ← Minority language vocabulary
 │   ├── svg-embed-guide.md        ← SVG embedding reference
 │   └── checklist.md              ← Output quality checklist
-└── README_CN.md / README.md / README_FR.md
+├── README_CN.md                  ← Simplified Chinese
+├── README.md                     ← English (this file)
+├── README_FR.md                  ← French
+├── README_BO.md                  ← Tibetan
+└── README_UG.md                  ← Uyghur
 ```
 
 ---
 
 ## FAQ
 
-**Q: Do I need programming knowledge?**
-A: No. Installation is just copying a folder. Usage is plain natural language conversation.
+<details>
+<summary><strong>Q: Do I need programming knowledge?</strong></summary>
 
-**Q: Does the generated slide need internet?**
-A: The AI needs internet to generate the file, but the finished `.html` file is fully offline.
+No. Installation is just copying a folder. Usage is plain natural language conversation.
 
-**Q: Which browsers work?**
-A: Chrome, Edge, Firefox, Safari — all work. On older school computers, the latest Chrome or Edge is recommended.
+</details>
 
-**Q: Are the minority language translations accurate?**
-A: Generally accurate, but dialects vary. For critical content, please have a local speaker review it.
+<details>
+<summary><strong>Q: Does the generated slide need internet?</strong></summary>
+
+The AI needs internet to generate the file, but the finished `.html` file is fully offline — copy it to a USB drive and use it anywhere.
+
+</details>
+
+<details>
+<summary><strong>Q: Which browsers work?</strong></summary>
+
+Chrome, Edge, Firefox, Safari — all work. On older school computers, the latest Chrome or Edge is recommended (both free).
+
+</details>
+
+<details>
+<summary><strong>Q: Are the minority language translations accurate?</strong></summary>
+
+Generally accurate, but dialects vary. For critical content, please have a local speaker review it.
+
+</details>
+
+<details>
+<summary><strong>Q: Can I edit the generated slides?</strong></summary>
+
+Yes. HTML slides are standard web files — open them in any text editor (VS Code, Notepad) to modify.
+
+</details>
+
+<details>
+<summary><strong>Q: How do I use this with ChatGPT or Codex?</strong></summary>
+
+Copy the full content of `SKILL.md` and paste it as the System Prompt. For best results, also attach the files in `references/`.
+
+</details>
+
+<details>
+<summary><strong>Q: How do I update the skill pack?</strong></summary>
+
+If you used Git: run `git pull` inside the `zhijiao-skills` folder. If you downloaded a ZIP: delete the old folder and re-download.
+
+</details>
 
 ---
 

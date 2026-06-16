@@ -8,13 +8,13 @@
 
 <div align="center">
 
-**中文** | [English](README.md) | [Français](README_FR.md)
+**简体中文** | [English](README.md) | [Français](README_FR.md) | [བོད་སྐད](README_BO.md) | [ئۇيغۇرچە](README_UG.md)
 
 </div>
 
 <div align="center">
 
-![版本](https://img.shields.io/badge/版本-1.0.0-orange)
+![版本](https://img.shields.io/badge/版本-1.4.1-orange)
 ![兼容](https://img.shields.io/badge/兼容-Claude%20Code%20%7C%20通用%20AI-blue)
 ![许可证](https://img.shields.io/badge/许可证-MIT-green)
 
@@ -70,6 +70,18 @@ claude --version
 
 ---
 
+### AI 工具推荐
+
+| 工具 | 推荐程度 | 说明 |
+|---|---|---|
+| **Claude Code**（CLI）| ⭐⭐⭐⭐⭐ 最推荐 | 原生支持 `/skills` 技能系统，一键触发，体验最佳 |
+| **OpenAI Codex / ChatGPT** | ⭐⭐⭐⭐ 推荐 | 将 `SKILL.md` 作为 System Prompt 粘贴，效果良好 |
+| **Claude.ai 网页版** | ⭐⭐⭐⭐ 推荐 | 上传 `SKILL.md` 文件到对话窗口，即可使用 |
+| **Cursor / Windsurf** | ⭐⭐⭐ 可用 | 将 `SKILL.md` 添加为项目规则文件（`.cursorrules`） |
+| **本地 AI（Ollama 等）** | ⭐⭐⭐ 可用 | 将 `SKILL.md` 内容作为系统提示，效果取决于模型能力 |
+
+---
+
 ### 方法一：直接下载安装（推荐给非程序员）
 
 **第一步：下载技能包**
@@ -111,9 +123,33 @@ claude
 
 ---
 
-### 方法二：使用 Git 安装（给熟悉命令行的用户）
+### 方法二：使用 npm 安装（推荐给开发者）
 
-打开终端，执行：
+> 前提：已安装 [Node.js](https://nodejs.org/) 和 npm（安装 Node.js 会自动附带 npm）。
+
+```bash
+# 第一步：安装 Claude Code（如尚未安装）
+npm install -g @anthropic-ai/claude-code
+
+# 第二步：进入 Claude Code 技能目录
+# Windows：
+cd %USERPROFILE%\.claude\skills
+# Mac/Linux：
+cd ~/.claude/skills
+
+# 第三步：克隆本技能包
+git clone https://github.com/LargeMambo/zhijiao-skills.git
+
+# 第四步：进入 Claude Code 验证
+claude
+/skills
+```
+
+> **兼容性说明：** Claude Code 通过 npm 全局安装，支持 Node.js 18+，Windows / macOS / Linux 均可使用。技能包本身是纯文本文件，无任何 npm 依赖，无需 `npm install`。
+
+---
+
+### 方法三：使用 Git 安装（给熟悉命令行的用户）
 
 ```bash
 # 进入技能目录（Windows）
@@ -123,20 +159,20 @@ cd %USERPROFILE%\.claude\skills
 cd ~/.claude/skills
 
 # 克隆本仓库
-git clone https://github.com/你的用户名/zhijiao-skills.git
+git clone https://github.com/LargeMambo/zhijiao-skills.git
 ```
 
 ---
 
-### 方法三：通用 AI 工具使用
+### 方法四：通用 AI 工具使用
 
 本技能组不依赖 Claude Code 独有功能，可以在以下工具中直接使用：
 
 | 工具 | 使用方式 |
 |---|---|
 | **Claude.ai 网页版** | 上传 `SKILL.md` 文件到对话，或将其内容粘贴为系统提示 |
-| **ChatGPT / GPT-4** | 将 `SKILL.md` 内容粘贴到 System Prompt |
-| **Cursor / Windsurf** | 将 `SKILL.md` 添加为项目规则文件 |
+| **ChatGPT / Codex** | 将 `SKILL.md` 内容粘贴到 System Prompt |
+| **Cursor / Windsurf** | 将 `SKILL.md` 添加为项目规则文件（`.cursorrules`） |
 | **本地 AI（Ollama 等）** | 将 `SKILL.md` 内容作为系统提示使用 |
 
 > 使用通用 AI 时，建议同时附上 `references/` 目录下的参考文件，以获得更好的输出效果。
@@ -306,35 +342,72 @@ zhijiao-skills/
 │   ├── minority-languages.md     ← 少数民族语言词汇模板
 │   ├── svg-embed-guide.md        ← SVG 内嵌规范
 │   └── checklist.md              ← 输出质检清单
-├── README_CN.md                  ← 本文件（中文文档）
+├── README_CN.md                  ← 本文件（简体中文）
 ├── README.md                     ← 英文文档
-└── README_FR.md                  ← 法文文档
+├── README_FR.md                  ← 法文文档
+├── README_BO.md                  ← 藏语文档
+└── README_UG.md                  ← 维吾尔语文档
 ```
 
 ---
 
 ## 常见问题
 
-**Q：我不懂编程，能用吗？**
-A：完全可以。安装步骤只是复制文件夹，使用时只需要用中文描述你的需求，像平时和人说话一样。
+<details>
+<summary><strong>Q：我不懂编程，能用吗？</strong></summary>
 
-**Q：生成的课件需要网络吗？**
-A：不需要。生成过程需要联网（AI 需要网络），但生成完毕的 `.html` 文件是完全离线的，可以拷贝到 U 盘在任何地方使用。
+完全可以。安装步骤只是复制文件夹，使用时只需要用中文描述你的需求，像平时和人说话一样。
 
-**Q：支持哪些浏览器？**
-A：Chrome、Edge、Firefox、Safari 均可。在学校老旧电脑上建议使用最新版 Chrome 或 Edge（免费下载）。
+</details>
 
-**Q：生成 PPTX 需要安装 Office 吗？**
-A：生成 PPTX 文件需要 AI 工具环境中有相关支持（Claude Code 的 pptx skill）。如果不行，建议直接使用 HTML 版课件。
+<details>
+<summary><strong>Q：生成的课件需要网络吗？</strong></summary>
 
-**Q：教案里的少数民族语翻译准确吗？**
-A：AI 生成的翻译准确率较高，但存在方言差异。涉及重要概念，请让当地会说少数民族语的同事帮忙核对。
+不需要。生成过程需要联网（AI 需要网络），但生成完毕的 `.html` 文件是完全离线的，可以拷贝到 U 盘在任何地方使用。
 
-**Q：可以修改生成的课件吗？**
-A：可以。HTML 课件是标准的网页文件，可以用任何文本编辑器（如 VS Code、记事本）打开修改。
+</details>
 
-**Q：如何更新技能组？**
-A：删除旧的 `zhijiao-skills` 文件夹，重新下载安装即可。
+<details>
+<summary><strong>Q：支持哪些浏览器？</strong></summary>
+
+Chrome、Edge、Firefox、Safari 均可。在学校老旧电脑上建议使用最新版 Chrome 或 Edge（免费下载）。
+
+</details>
+
+<details>
+<summary><strong>Q：生成 PPTX 需要安装 Office 吗？</strong></summary>
+
+生成 PPTX 文件需要 AI 工具环境中有相关支持（Claude Code 的 pptx skill）。如果不行，建议直接使用 HTML 版课件。
+
+</details>
+
+<details>
+<summary><strong>Q：教案里的少数民族语翻译准确吗？</strong></summary>
+
+AI 生成的翻译准确率较高，但存在方言差异。涉及重要概念，请让当地会说少数民族语的同事帮忙核对。
+
+</details>
+
+<details>
+<summary><strong>Q：可以修改生成的课件吗？</strong></summary>
+
+可以。HTML 课件是标准的网页文件，可以用任何文本编辑器（如 VS Code、记事本）打开修改。
+
+</details>
+
+<details>
+<summary><strong>Q：如何更新技能组？</strong></summary>
+
+删除旧的 `zhijiao-skills` 文件夹，重新下载安装即可。如果使用 Git 安装，可以在技能目录里执行 `git pull` 直接更新。
+
+</details>
+
+<details>
+<summary><strong>Q：在 ChatGPT / Codex 里怎么用？</strong></summary>
+
+将 `SKILL.md` 的全部内容复制，粘贴为 System Prompt（系统提示）。建议同时附上 `references/` 目录下的参考文件，效果更好。
+
+</details>
 
 ---
 
